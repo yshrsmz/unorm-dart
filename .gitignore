@@ -13,6 +13,7 @@ pubspec.lock
 doc/api/
 
 .idea/*
+*.iml
 
 !.idea/codeStyles/
 !.idea/saveactions_settings.xml
