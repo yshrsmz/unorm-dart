@@ -66,7 +66,7 @@ UChar _fromRuleBasedJamo(Function next, int cp, bool needFeature) {
 
   final SIndex = cp - _SBase;
   final TIndex = SIndex % _TCount;
-  final feature = [];
+  final feature = List(3);
   if (TIndex != 0) {
     feature[0] = [_SBase + SIndex - TIndex, _TBase + TIndex];
     feature[1] = null;
@@ -74,10 +74,10 @@ UChar _fromRuleBasedJamo(Function next, int cp, bool needFeature) {
   } else {
     feature[0] = [
       _LBase + (SIndex / _NCount).floor(),
-      _VBase + ((SIndex % _NCount).floor() / _TCount)
+      _VBase + ((SIndex % _NCount) / _TCount).floor()
     ];
     feature[1] = null;
-    feature[2] = {};
+    feature[2] = Map<int, int>();
     for (int j = 1; j < _TCount; ++j) {
       feature[2][_TBase + j] = cp + j;
     }
@@ -149,7 +149,7 @@ class UChar {
 
   UChar getComposite(UChar following) {
     prepareFeature();
-    final Map<int, Object> feature2 = _feature[2];
+    final Map<dynamic, dynamic> feature2 = _feature[2];
     if (feature2 == null) {
       return null;
     }
