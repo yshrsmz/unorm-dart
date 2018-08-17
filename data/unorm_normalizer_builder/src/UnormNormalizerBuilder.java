@@ -98,17 +98,21 @@ class UnormNormalizerBuilder {
             String compStr = toJSON_comp();
             if (decompose != null) {
                 sb.append(decompStr);
+            } else {
+                sb.append("null");
             }
-            if (flagStr.equals("0") && composeTrie.size() == 0) {
-                sb.append("]");
-                return sb.toString();
-            }
+//			if (flagStr.equals("0") && composeTrie.size() == 0) {
+//				sb.append("]");
+//				return sb.toString();
+//			}
             sb.append(",");
             if (!flagStr.equals("0")) {
                 sb.append(flagStr);
+            } else {
+                sb.append("null");
             }
             if (composeTrie.size() == 0) {
-                f.format("]");
+                f.format(",{}]");
                 return sb.toString();
             }
             sb.append(",").append(compStr).append("]");
@@ -129,7 +133,7 @@ class UnormNormalizerBuilder {
         public static String toJSONAll() {
             StringBuilder sb = new StringBuilder();
             UChar uc = null;
-            sb.append("UChar.udata={\n");
+            sb.append("final unormdata={\n");
             Map<Integer, StringBuilder> res = new HashMap<Integer, StringBuilder>();
             for (int i = 0; i < 256; ++i) {
                 res.put(i, new StringBuilder());
@@ -181,7 +185,7 @@ class UnormNormalizerBuilder {
         try {
             readExclusionList();
             buildDecompositionTables();
-            OutputStreamWriter w = new OutputStreamWriter(new FileOutputStream("unormdata.js"), "utf-8");
+            OutputStreamWriter w = new OutputStreamWriter(new FileOutputStream("unormdata.dart"), "utf-8");
             write(w);
             w.close();
         } catch (java.io.IOException e) {
