@@ -35,10 +35,14 @@ void main() {
     if (parts.length == 1) {
       return;
     }
+    parts.removeLast();
 
-    List<List<int>> partsInt = parts.map((part) {
-      return part.codeUnits;
-    }).toList();
+    List<List<int>> partsInt = parts
+        .map((part) => part
+            .split(RegExp(r"\s+"))
+            .map((s) => int.parse(s, radix: 16))
+            .toList())
+        .toList();
 
     Parts result = Parts(partsInt, "${index}:${line}");
     tests.add(result);
