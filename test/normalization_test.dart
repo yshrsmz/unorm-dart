@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
 
-import 'package:matcher/matcher.dart';
 import 'package:test/test.dart';
 import 'package:unorm_dart/unorm_dart.dart' as unorm;
 

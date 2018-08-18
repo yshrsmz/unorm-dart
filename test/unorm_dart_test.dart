@@ -1,4 +1,3 @@
-import 'package:matcher/matcher.dart';
 import 'package:test/test.dart';
 import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
