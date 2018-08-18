@@ -1,22 +1,39 @@
 # unorm_dart
 
-A library for Dart developers.
+Unicode 8.0 Normalization - NFC, NFD, NFKC, NFKD
+Dart2 port of [unorm](https://github.com/walling/unorm)
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+## Functions
+
+This module exports four functions: `nfc`, `nfd`, `nfkc`, and `nfkd`; one for each Unicode normalization. In the browser the functions are exported in the `unorm` global. In CommonJS environments you just require the module. Functions:
+
+- `unorm.nfd(str)` – Canonical Decomposition
+- `unorm.nfc(str)` – Canonical Decomposition, followed by Canonical Composition
+- `unorm.nfkd(str)` – Compatibility Decomposition
+- `unorm.nfkc(str)` – Compatibility Decomposition, followed by Canonical Composition
 
 ## Usage
 
 A simple usage example:
 
-    import 'package:unorm_dart/unorm_dart.dart';
+```dart
+import "package:unorm_dart/unorm_dart.dart" as unorm;
 
-    main() {
-      var awesome = new Awesome();
-    }
+void main() {
+  var text = "The \u212B symbol invented by A. J. \u00C5ngstr\u00F6m " +
+      "(1814, L\u00F6gd\u00F6, \u2013 1874) denotes the length " +
+      "10\u207B\u00B9\u2070 m.";
+
+  var combining = RegExp(r"[\u0300-\u036F]/g");
+
+  print("Regular:  ${text}");
+  print("NFC:      ${unorm.nfc(text)}");
+  print("NFKC:     ${unorm.nfkc(text)}");
+  print("NFKD: *   ${unorm.nfkd(text).replaceAll(combining, "")}");
+  print(" * = Combining characters removed from decomposed form.");
+}
+```
 
 ## Features and bugs
 
-Please file feature requests and bugs at the [issue tracker][tracker].
-
-[tracker]: http://example.com/issues/replaceme
+Please file feature requests and bugs at the [issue tracker][https://github.com/yshrsmz/unorm-dart].
