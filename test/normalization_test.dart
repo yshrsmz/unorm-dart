@@ -4,7 +4,7 @@ import 'dart:math' as math;
 
 import 'package:matcher/matcher.dart';
 import 'package:test/test.dart';
-import 'package:unorm_dart/unorm_dart.dart';
+import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
 class Parts {
   String line;
@@ -70,10 +70,10 @@ void main() {
 void doTest(Parts parts) {
   var raw = parts.codes.map((codes) => String.fromCharCodes(codes)).toList();
 
-  var nfd = raw.map((s) => Unorm.nfd(s)).toList();
-  var nfkd = raw.map((s) => Unorm.nfkd(s)).toList();
-  var nfc = raw.map((s) => Unorm.nfc(s)).toList();
-  var nfkc = raw.map((s) => Unorm.nfkc(s)).toList();
+  var nfd = raw.map((s) => unorm.nfd(s)).toList();
+  var nfkd = raw.map((s) => unorm.nfkd(s)).toList();
+  var nfc = raw.map((s) => unorm.nfc(s)).toList();
+  var nfkc = raw.map((s) => unorm.nfkc(s)).toList();
 
   // NFC
   expect(nfc[0], equals(raw[1]), reason: "${parts.line}: c2 == NFC(c1)");

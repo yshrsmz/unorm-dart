@@ -22,6 +22,7 @@ UnormIterator _createIterator(_NormalizeMode mode, String str) {
       return CompositeIterator(DecompositeIterator(
           RecursiveDecompositeIterator(UCharIterator(str), false)));
   }
+  throw ArgumentError.value(mode, "mode", "Invalid normalization mode");
 }
 
 String _normalize(_NormalizeMode mode, String str) {
@@ -35,14 +36,10 @@ String _normalize(_NormalizeMode mode, String str) {
   return ret;
 }
 
-class Unorm {
-  Unorm._();
+String nfd(String str) => _normalize(_NormalizeMode.NFD, str);
 
-  static nfd(String str) => _normalize(_NormalizeMode.NFD, str);
+String nfkd(String str) => _normalize(_NormalizeMode.NFKD, str);
 
-  static nfkd(String str) => _normalize(_NormalizeMode.NFKD, str);
+String nfc(String str) => _normalize(_NormalizeMode.NFC, str);
 
-  static nfc(String str) => _normalize(_NormalizeMode.NFC, str);
-
-  static nfkc(String str) => _normalize(_NormalizeMode.NFKC, str);
-}
+String nfkc(String str) => _normalize(_NormalizeMode.NFKC, str);
