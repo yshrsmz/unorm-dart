@@ -34,6 +34,11 @@ void main() {
 }
 ```
 
+## Generating Unicode data
+
+see [yshrsmz/unorm-dart-data-generator](https://github.com/yshrsmz/unorm-dart-data-generator).
+
+
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][https://github.com/yshrsmz/unorm-dart].
