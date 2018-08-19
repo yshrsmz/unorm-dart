@@ -1,6 +1,7 @@
 # unorm_dart
 
 Unicode 8.0 Normalization - NFC, NFD, NFKC, NFKD
+
 Dart2 port of [unorm](https://github.com/walling/unorm)
 
 ## Functions

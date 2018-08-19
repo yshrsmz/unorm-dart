@@ -1,6 +1,6 @@
 name: unorm_dart
 description: A starting point for Dart libraries or applications.
-# version: 1.0.0
+version: 0.1.0
 homepage: https://github.com/yshrsmz/unorm-dart
 author: Yasuhiro Shimizu <the.phantom.bane@gmail.com>
 
