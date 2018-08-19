@@ -42,4 +42,4 @@ see [yshrsmz/unorm-dart-data-generator](https://github.com/yshrsmz/unorm-dart-da
 
 ## Features and bugs
 
-Please file feature requests and bugs at the [issue tracker][https://github.com/yshrsmz/unorm-dart].
+Please file feature requests and bugs at the [issue tracker](https://github.com/yshrsmz/unorm-dart).
