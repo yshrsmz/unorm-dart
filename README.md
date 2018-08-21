@@ -1,5 +1,7 @@
 # unorm_dart
 
+[![Build Status](https://travis-ci.org/yshrsmz/unorm-dart.svg?branch=master)](https://travis-ci.org/yshrsmz/unorm-dart)
+
 Unicode 8.0 Normalization - NFC, NFD, NFKC, NFKD
 
 Dart2 port of [unorm](https://github.com/walling/unorm)
