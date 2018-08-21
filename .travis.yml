@@ -7,5 +7,5 @@ dart:
   - "2.0.0"
 dart_task:
   - test: --platform vm
-  - test: --platform chrome
+  - test: --platform chrome ./test/unorm_dart_test.dart
   - dartanalyzer: true
