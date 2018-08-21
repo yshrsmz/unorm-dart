@@ -36,10 +36,14 @@ String _normalize(_NormalizeMode mode, String str) {
   return ret;
 }
 
+/// Normalizes provided [str] with Canonical Decomposition.
 String nfd(String str) => _normalize(_NormalizeMode.NFD, str);
 
+/// Normalizes provided [str] with Compatibility Decomposition.
 String nfkd(String str) => _normalize(_NormalizeMode.NFKD, str);
 
+/// Normalizes provided [str] with Canonical Decomposition, followed by Canonical Composition.
 String nfc(String str) => _normalize(_NormalizeMode.NFC, str);
 
+/// Normalizes provided [str] with Compatibility Decomposition, followed by Canonical Composition.
 String nfkc(String str) => _normalize(_NormalizeMode.NFKC, str);

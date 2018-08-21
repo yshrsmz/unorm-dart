@@ -26,8 +26,8 @@ void main() {
       return;
     }
 
-    // Columns (c1, c2,...) are separated by semicolons
-    // They have the following meaning: source; NFC; NFD; NFKC; NFKD
+    // Columns (c1, c2,...) are separated by semicolons.
+    // They have the following meaning: source; NFC; NFD; NFKC; NFKD.
     var parts = line.split(RegExp(r"\s*;\s*"));
     assert(parts.length == 1 || parts.length == 6,
         "There should be five columns, not ${parts.length} -- line ${index}");
