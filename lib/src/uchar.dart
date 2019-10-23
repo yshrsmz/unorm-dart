@@ -24,6 +24,7 @@ void initUCharCache() {
   for (int i = 0; i <= 0xFF; i++) {
     _cacheCounter.add(0);
   }
+  _initialized = true;
 }
 
 UChar _fromCache(Function next, int cp, bool needFeature) {
