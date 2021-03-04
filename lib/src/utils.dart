@@ -1,5 +1,11 @@
-dynamic reduceRight(List list, fn(prev, curr, int index, List list),
-    [initialValue]) {
+import 'package:unorm_dart/src/uchar.dart';
+
+typedef CurrFunc = UChar? Function(NextFunc?, int, bool);
+
+Function reduceRight(
+  List<UChar? Function(NextFunc?, int, bool)> list,
+  NextFunc Function(NextFunc? prev, CurrFunc? curr, int index, List list) fn,
+    [Function? initialValue]) {
   var length = list.length;
   var index = length - 1;
   var value;
@@ -22,14 +28,11 @@ dynamic reduceRight(List list, fn(prev, curr, int index, List list),
   return value;
 }
 
-List<T?> splice<T>(List<T?> list, int index,
-    [num howMany = 0, dynamic elements]) {
+List<T> splice<T>(List<T> list, int index, [num howMany = 0, T? element]) {
   var endIndex = index + howMany.truncate();
   list.removeRange(index, endIndex >= list.length ? list.length : endIndex);
-  if (elements != null) {
-    List<T?> el = elements is List ? elements as List<T?> : [elements];
-    list.insertAll(index, el);
+  if (element != null) {
+    list.insertAll(index, [element]);
   }
-
   return list;
 }

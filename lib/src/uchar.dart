@@ -27,10 +27,12 @@ void initUCharCache() {
   _initialized = true;
 }
 
-UChar? _fromCache(Function next, int cp, bool needFeature) {
+typedef NextFunc = UChar? Function(int, bool);
+
+UChar? _fromCache(NextFunc? next, int cp, bool needFeature) {
   UChar? ret = _cache[cp] as UChar?;
   if (ret == null) {
-    ret = next(cp, needFeature);
+    ret = next!(cp, needFeature);
     if (ret!.feature != null &&
         ++_cacheCounter[(cp >> 8) & 0xFF] > _CACHE_THRESHOLD) {
       _cache[cp] = ret;
@@ -39,22 +41,22 @@ UChar? _fromCache(Function next, int cp, bool needFeature) {
   return ret;
 }
 
-UChar _fromData(Function next, int cp, bool needFeature) {
+UChar? _fromData(NextFunc? next, int cp, bool needFeature) {
   final hash = cp & 0xFF00;
   final dunit = unormdata[hash] ?? {};
   final f = dunit[cp];
   return f != null ? UChar(cp, f) : UChar(cp, _DEFAULT_FEATURE);
 }
 
-UChar? _fromCpOnly(Function next, int cp, bool needFeature) {
-  return needFeature ? next(cp, needFeature) : UChar(cp, null);
+UChar? _fromCpOnly(NextFunc? next, int cp, bool needFeature) {
+  return needFeature ? next!(cp, needFeature) : UChar(cp, null);
 }
 
-UChar? _fromRuleBasedJamo(Function next, int cp, bool needFeature) {
+UChar? _fromRuleBasedJamo(NextFunc? next, int cp, bool needFeature) {
   if (cp < _LBase ||
       (_LBase + _LCount <= cp && cp < _SBase) ||
       (_SBase + _SCount < cp)) {
-    return next(cp, needFeature);
+    return next!(cp, needFeature);
   }
   if (_LBase <= cp && cp < _LBase + _LCount) {
     final c = Map<int, Object>();
@@ -86,17 +88,17 @@ UChar? _fromRuleBasedJamo(Function next, int cp, bool needFeature) {
   return UChar(cp, feature);
 }
 
-UChar? _fromCpFilter(Function next, int cp, bool needFeature) {
+UChar? _fromCpFilter(NextFunc? next, int cp, bool needFeature) {
   return cp < 60 || 13311 < cp && cp < 42607
       ? UChar(cp, _DEFAULT_FEATURE)
-      : next(cp, needFeature);
+      : next!(cp, needFeature);
 }
 
-final Function? _fromCharCode = reduceRight(
+final Function _fromCharCode = reduceRight(
     [_fromCpFilter, _fromCache, _fromCpOnly, _fromRuleBasedJamo, _fromData],
     (next, strategy, int index, List list) {
   return (int cp, bool needFeature) {
-    return strategy(next, cp, needFeature);
+    return strategy!(next, cp, needFeature);
   };
 }, null);
 
@@ -159,7 +161,7 @@ class UChar {
   }
 
   static UChar? fromCharCode(int cp, bool needFeature) =>
-      _fromCharCode!(cp, needFeature);
+      _fromCharCode(cp, needFeature);
 
   static bool isHighSurrogate(int cp) {
     return cp >= 0xD800 && cp <= 0xDBFF;
