@@ -19,7 +19,7 @@ void main() {
   final List<Parts> tests = [];
 
   int index = 0;
-  utdata.split("\n").forEach((String line) {
+  utdata.split(RegExp("\r?\n")).forEach((String line) {
     line = line.replaceFirst(RegExp(r"#.*$"), "");
     if (line.indexOf("@") == 0) {
       // title
