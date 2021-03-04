@@ -98,7 +98,7 @@ final Function _fromCharCode = reduceRight(
     [_fromCpFilter, _fromCache, _fromCpOnly, _fromRuleBasedJamo, _fromData],
     (next, strategy, int index, List list) {
   return (int cp, bool needFeature) {
-    return strategy!(next, cp, needFeature);
+    return strategy(next, cp, needFeature);
   };
 }, null);
 
