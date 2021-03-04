@@ -14,7 +14,7 @@ final _NCount = _VCount * _TCount;
 final _SCount = _LCount * _NCount;
 
 bool _initialized = false;
-final Map<int, Object?> _cache = Map();
+final Map<int, UChar> _cache = Map();
 final List<int> _cacheCounter = <int>[];
 
 void initUCharCache() {
@@ -27,13 +27,13 @@ void initUCharCache() {
   _initialized = true;
 }
 
-typedef NextFunc = UChar? Function(int, bool);
+typedef NextFunc = UChar Function(int, bool);
 
-UChar? _fromCache(NextFunc? next, int cp, bool needFeature) {
-  UChar? ret = _cache[cp] as UChar?;
+UChar _fromCache(NextFunc? next, int cp, bool needFeature) {
+  UChar? ret = _cache[cp];
   if (ret == null) {
     ret = next!(cp, needFeature);
-    if (ret!.feature != null &&
+    if (ret.feature != null &&
         ++_cacheCounter[(cp >> 8) & 0xFF] > _CACHE_THRESHOLD) {
       _cache[cp] = ret;
     }
@@ -41,18 +41,18 @@ UChar? _fromCache(NextFunc? next, int cp, bool needFeature) {
   return ret;
 }
 
-UChar? _fromData(NextFunc? next, int cp, bool needFeature) {
+UChar _fromData(NextFunc? next, int cp, bool needFeature) {
   final hash = cp & 0xFF00;
   final dunit = unormdata[hash] ?? {};
   final f = dunit[cp];
   return f != null ? UChar(cp, f) : UChar(cp, _DEFAULT_FEATURE);
 }
 
-UChar? _fromCpOnly(NextFunc? next, int cp, bool needFeature) {
+UChar _fromCpOnly(NextFunc? next, int cp, bool needFeature) {
   return needFeature ? next!(cp, needFeature) : UChar(cp, null);
 }
 
-UChar? _fromRuleBasedJamo(NextFunc? next, int cp, bool needFeature) {
+UChar _fromRuleBasedJamo(NextFunc? next, int cp, bool needFeature) {
   if (cp < _LBase ||
       (_LBase + _LCount <= cp && cp < _SBase) ||
       (_SBase + _SCount < cp)) {
@@ -88,7 +88,7 @@ UChar? _fromRuleBasedJamo(NextFunc? next, int cp, bool needFeature) {
   return UChar(cp, feature);
 }
 
-UChar? _fromCpFilter(NextFunc? next, int cp, bool needFeature) {
+UChar _fromCpFilter(NextFunc? next, int cp, bool needFeature) {
   return cp < 60 || 13311 < cp && cp < 42607
       ? UChar(cp, _DEFAULT_FEATURE)
       : next!(cp, needFeature);
