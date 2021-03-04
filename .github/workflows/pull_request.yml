@@ -17,10 +17,10 @@ jobs:
     - uses: dart-lang/setup-dart@v1
 
     - name: install dependencies
-      run: pub get
+      run: dart pub get
 
     - name: test on vm
-      run: pub run test --platform vm
+      run: dart pub run test --platform vm
 
     - name: test on chrome
-      run: pub run test --platform chrome ./test/unorm_dart_test.dart
+      run: dart pub run test --platform chrome ./test/unorm_dart_test.dart
