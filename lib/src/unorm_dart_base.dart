@@ -29,7 +29,7 @@ String _normalize(_NormalizeMode mode, String str) {
   initUCharCache();
   UnormIterator iterator = _createIterator(mode, str);
   String ret = "";
-  UChar uchar;
+  UChar? uchar;
   while ((uchar = iterator.next()) != null) {
     ret += uchar.toString();
   }

@@ -10,11 +10,11 @@ class DecompositeIterator implements UnormIterator {
   DecompositeIterator(this._iterator) : this._resultBuffer = [];
 
   @override
-  UChar next() {
+  UChar? next() {
     int cc;
     if (_resultBuffer.isEmpty) {
       do {
-        UChar uchar = _iterator.next();
+        UChar? uchar = _iterator.next();
         if (uchar == null) {
           break;
         }
