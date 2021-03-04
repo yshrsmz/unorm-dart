@@ -1,0 +1,26 @@
+name: Unit Test
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: dart-lang/setup-dart@v1
+
+    - name: install dependencies
+      run: pub get
+
+    - name: test on vm
+      run: pub run test --platform vm
+
+    - name: test on chrome
+      run: pub run test --platform chrome ./test/unorm_dart_test.dart
