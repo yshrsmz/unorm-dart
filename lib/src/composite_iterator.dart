@@ -14,9 +14,9 @@ class CompositeIterator implements UnormIterator {
         _lastClass = -1;
 
   @override
-  UChar next() {
+  UChar? next() {
     while (_resultBuffer.isEmpty) {
-      UChar uchar = _iterator.next();
+      UChar? uchar = _iterator.next();
       if (uchar == null) {
         _resultBuffer = _processBuffer;
         _processBuffer = [];
@@ -27,7 +27,7 @@ class CompositeIterator implements UnormIterator {
         _processBuffer.add(uchar);
       } else {
         UChar starter = _processBuffer[0];
-        UChar composite = starter.getComposite(uchar);
+        UChar? composite = starter.getComposite(uchar);
         int cc = uchar.getCanonicalClass();
 
         if (composite != null && (_lastClass < cc || _lastClass == 0)) {

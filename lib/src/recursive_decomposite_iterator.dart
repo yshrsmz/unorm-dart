@@ -13,10 +13,10 @@ class RecursiveDecompositeIterator implements UnormIterator {
   List<UChar> _recursiveDecompose(bool canonical, UChar uchar) {
     final decomp = uchar.getDecomp();
     if (decomp != null && !(canonical && uchar.isCompatibility())) {
-      final ret = List<UChar>();
+      final ret = <UChar>[];
       for (int i = 0; i < decomp.length; ++i) {
         final a = _recursiveDecompose(
-            canonical, UChar.fromCharCode(decomp[i], false));
+            canonical, UChar.fromCharCode(decomp[i], false)!);
         ret.addAll(a);
       }
       return ret;
@@ -26,7 +26,7 @@ class RecursiveDecompositeIterator implements UnormIterator {
   }
 
   @override
-  UChar next() {
+  UChar? next() {
     if (_resultBuffer.isEmpty) {
       final uchar = _iterator.next();
       if (uchar == null) {
