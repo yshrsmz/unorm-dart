@@ -28,12 +28,12 @@ UnormIterator _createIterator(_NormalizeMode mode, String str) {
 String _normalize(_NormalizeMode mode, String str) {
   initUCharCache();
   UnormIterator iterator = _createIterator(mode, str);
-  String ret = "";
+  StringBuffer ret = StringBuffer();
   UChar? uchar;
   while ((uchar = iterator.next()) != null) {
-    ret += uchar.toString();
+    ret.writeCharCode(uchar!.codepoint);
   }
-  return ret;
+  return ret.toString();
 }
 
 /// Normalizes provided [str] with Canonical Decomposition.
