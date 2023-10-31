@@ -22,7 +22,6 @@ UnormIterator _createIterator(_NormalizeMode mode, String str) {
       return CompositeIterator(DecompositeIterator(
           RecursiveDecompositeIterator(UCharIterator(str), false)));
   }
-  throw ArgumentError.value(mode, "mode", "Invalid normalization mode");
 }
 
 String _normalize(_NormalizeMode mode, String str) {
