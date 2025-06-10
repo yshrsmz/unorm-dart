@@ -152,7 +152,8 @@ class UChar {
 
   UChar? getComposite(UChar following) {
     prepareFeature();
-    final Map<dynamic, dynamic>? feature2 = _feature![2] as Map<dynamic, dynamic>?;
+    final Map<dynamic, dynamic>? feature2 =
+        _feature![2] as Map<dynamic, dynamic>?;
     if (feature2 == null) {
       return null;
     }

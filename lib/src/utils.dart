@@ -2,9 +2,8 @@ import 'package:unorm_dart/src/uchar.dart';
 
 typedef CurrFunc = UChar Function(NextFunc?, int, bool);
 
-Function reduceRight(
-  List<CurrFunc> list,
-  NextFunc Function(NextFunc? prev, CurrFunc curr, int index, List list) fn,
+Function reduceRight(List<CurrFunc> list,
+    NextFunc Function(NextFunc? prev, CurrFunc curr, int index, List list) fn,
     [Function? initialValue]) {
   var length = list.length;
   var index = length - 1;

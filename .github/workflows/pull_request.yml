@@ -1,4 +1,4 @@
-name: Unit Test
+name: Dart CI
 
 on:
   pull_request:
@@ -12,15 +12,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-    - uses: dart-lang/setup-dart@v1
+      - name: Setup mise
+        uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2.2.3
 
-    - name: install dependencies
-      run: dart pub get
+      - name: install dependencies
+        run: dart pub get
 
-    - name: test on vm
-      run: dart pub run test --platform vm
+      # We don't run formatter as we want to keep unormdata.dart as is.
+      # - name: Verify formatting
+      #   run: dart format --output=none --set-exit-if-changed .
 
-    - name: test on chrome
-      run: dart pub run test --platform chrome ./test/unorm_dart_test.dart
+      - name: Analyze project source
+        run: dart analyze
+
+      - name: test on vm
+        run: dart pub run test --platform vm
+
+      - name: test on chrome
+        run: dart pub run test --platform chrome ./test/unorm_dart_test.dart
+
+      - name: Dry-run publish
+        run: dart pub publish --dry-run
