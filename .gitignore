@@ -17,3 +17,5 @@ doc/api/
 
 !.idea/codeStyles/
 !.idea/saveactions_settings.xml
+
+.vscode/settings.json
