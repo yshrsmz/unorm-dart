@@ -1,4 +1,4 @@
-name: Unit Test
+name: Dart CI
 
 on:
   pull_request:
