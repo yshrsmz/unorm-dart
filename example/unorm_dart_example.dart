@@ -7,7 +7,7 @@ void main() {
       "(1814, L\u00F6gd\u00F6, \u2013 1874) denotes the length " +
       "10\u207B\u00B9\u2070 m.";
 
-  var combining = RegExp(r"[\u0300-\u036F]/g");
+  var combining = RegExp(r"[\u0300-\u036F]");
 
   print("Regular:  ${text}");
   print("NFC:      ${unorm.nfc(text)}");

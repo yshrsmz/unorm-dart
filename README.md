@@ -42,7 +42,15 @@ void main() {
 - [Unicode normalization forms report](http://www.unicode.org/reports/tr15/)
 - Unicode data can be found from http://www.unicode.org/Public/UCD/latest/ucd
 
+### Manual Generation
+
+To manually update the Unicode data and generate normalization files:
+
 ```shell
+# Download latest Unicode data files
+dart run tools/unicode_data_updater.dart
+
+# Update lib/src/unormdata.dart
 dart run tools/normalizer_gen.dart
 ```
 
