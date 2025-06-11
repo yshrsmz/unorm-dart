@@ -1,3 +1,7 @@
+## 0.3.1
+
+- Update unicode normalization data ([#27](https://github.com/yshrsmz/unorm-dart/pull/27)).
+
 ## 0.3.0
 
 - Update to Dart v3 ([#17](https://github.com/yshrsmz/unorm-dart/pull/17)).
