@@ -14,7 +14,7 @@ class Parts {
 
 void main() {
   final String utdata =
-      File('./test/NormalizationTest.txt').readAsStringSync(encoding: utf8);
+      File('./data/NormalizationTest.txt').readAsStringSync(encoding: utf8);
 
   final List<Parts> tests = [];
 

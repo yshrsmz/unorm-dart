@@ -39,7 +39,12 @@ void main() {
 
 ## Generating Unicode data
 
-see [yshrsmz/unorm-dart-data-generator](https://github.com/yshrsmz/unorm-dart-data-generator).
+- [Unicode normalization forms report](http://www.unicode.org/reports/tr15/)
+- Unicode data can be found from http://www.unicode.org/Public/UCD/latest/ucd
+
+```shell
+dart run tools/unorm_normalizer_builder.dart
+```
 
 
 ## Features and bugs
