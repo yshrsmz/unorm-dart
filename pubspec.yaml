@@ -7,8 +7,6 @@ homepage: https://github.com/yshrsmz/unorm-dart
 environment:
   sdk: '>=2.12.0 <4.0.0'
 
-#dependencies:
-#  path: ^1.4.1
-
 dev_dependencies:
   test: ^1.9.3
+  path: ^1.9.1
