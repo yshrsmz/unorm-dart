@@ -43,7 +43,7 @@ void main() {
 - Unicode data can be found from http://www.unicode.org/Public/UCD/latest/ucd
 
 ```shell
-dart run tools/unorm_normalizer_builder.dart
+dart run tools/normalizer_gen.dart
 ```
 
 
