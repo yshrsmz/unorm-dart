@@ -1,3 +1,8 @@
+## 0.3.1+1
+
+- Update supported Unicode version to 16
+  - Unicode 16 support is actually released in 0.3.1, this release aligns the description.
+
 ## 0.3.1
 
 - Update unicode normalization data ([#27](https://github.com/yshrsmz/unorm-dart/pull/27)).
