@@ -39,8 +39,8 @@ void main() {
 
 ## Generating Unicode data
 
-- [Unicode normalization forms report](http://www.unicode.org/reports/tr15/)
-- Unicode data can be found from http://www.unicode.org/Public/UCD/latest/ucd
+- [Unicode normalization forms report](https://www.unicode.org/reports/tr15/)
+- Unicode data can be found from https://www.unicode.org/Public/UCD/latest/ucd
 
 ### Manual Generation
 
