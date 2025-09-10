@@ -9,6 +9,6 @@ jobs:
   publish:
     permissions:
       id-token: write
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@e51d8e571e22473a2ddebf0ef8a2123f0ab2c02c # v1.7.1
     with:
       environment: pub.dev
