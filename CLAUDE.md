@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A Dart implementation of Unicode normalization (NFC, NFD, NFKC, NFKD) supporting Unicode 16.0. This is a Dart port of the JavaScript [walling/unorm](https://github.com/walling/unorm) library.
+A Dart implementation of Unicode normalization (NFC, NFD, NFKC, NFKD) supporting Unicode 17.0. This is a Dart port of the JavaScript [walling/unorm](https://github.com/walling/unorm) library.
 
 ## Commands
 
