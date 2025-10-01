@@ -1,3 +1,9 @@
+## 0.3.2
+
+- Update Unicode data to version 17 ([#41](https://github.com/yshrsmz/unorm-dart/pull/41))
+- Update dependency dart to v3.9.4 ([#40](https://github.com/yshrsmz/unorm-dart/pull/40))
+
+
 ## 0.3.1+1
 
 - Update supported Unicode version to 16

@@ -2,7 +2,7 @@
 
 [![Unit Test](https://github.com/yshrsmz/unorm-dart/actions/workflows/pull_request.yml/badge.svg)](https://github.com/yshrsmz/unorm-dart/actions/workflows/pull_request.yml)
 
-Unicode 16.0 Normalization - NFC, NFD, NFKC, NFKD
+Unicode 17.0 Normalization - NFC, NFD, NFKC, NFKD
 
 Dart2 port of [unorm](https://github.com/walling/unorm)
 
