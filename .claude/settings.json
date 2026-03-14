@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [],
+    "ask": [],
+    "deny": [
+      "Bash(git -C:*)"
+    ]
+  },
+  "extraKnownMarketplaces": {
+    "yshrsmz-cc-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "yshrsmz/cc-plugins"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "github@yshrsmz-cc-plugins": true
+  }
+}
