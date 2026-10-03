@@ -36,52 +36,23 @@ class _UChar {
   int canonicalClass = 0;
   Map<int, int> composeTrie = SplayTreeMap();
 
-  String toJSONFlag() {
-    return (canonicalClass |
-            (isCompatibility ? 1 << 8 : 0) |
-            (isExcluded ? 1 << 9 : 0))
-        .toString();
-  }
+  int get flag =>
+      canonicalClass | (isCompatibility ? 1 << 8 : 0) | (isExcluded ? 1 << 9 : 0);
 
-  String toJSONDecomp() {
-    if (decompose == null) return "[]";
-    return "[${decompose!.join(',')}]";
-  }
-
-  String toJSONComp() {
-    if (composeTrie.isEmpty) return "{}";
-    return "{${composeTrie.entries.map((e) => "${e.key}:${e.value}").join(',')}}";
-  }
-
-  String toJSON() {
-    final sb = StringBuffer();
-    sb.write("$codepoint:[");
-
-    final flagStr = toJSONFlag();
-    final decompStr = toJSONDecomp();
-    final compStr = toJSONComp();
-
+  void pack(void Function(int) writeVarint, int previous) {
+    final decompose = this.decompose;
+    writeVarint(codepoint - previous);
+    writeVarint((decompose != null ? 1 : 0) | (flag != 0 ? 2 : 0));
     if (decompose != null) {
-      sb.write(decompStr);
-    } else {
-      sb.write("null");
+      writeVarint(decompose.length);
+      decompose.forEach(writeVarint);
     }
-
-    sb.write(",");
-
-    if (flagStr != "0") {
-      sb.write(flagStr);
-    } else {
-      sb.write("null");
-    }
-
-    if (composeTrie.isEmpty) {
-      sb.write(",{}]");
-    } else {
-      sb.write(",$compStr]");
-    }
-
-    return sb.toString();
+    if (flag != 0) writeVarint(flag);
+    writeVarint(composeTrie.length);
+    composeTrie.forEach((key, value) {
+      writeVarint(key);
+      writeVarint(value);
+    });
   }
 }
 
@@ -92,39 +63,75 @@ class _UCharCache {
     return _cache.putIfAbsent(cp, () => _UChar(cp));
   }
 
-  String toJSONAll() {
-    final sb = StringBuffer();
-    sb.write("final unormdata={\n");
-    final saved = Set<int>();
-
-    final res = List.generate(256, (_) => StringBuffer());
-
-    for (final uc in _cache.values) {
-      if (uc.canonicalClass == 0 &&
-          !uc.isCompatibility &&
-          !uc.isExcluded &&
-          uc.decompose == null &&
-          uc.composeTrie.isEmpty) {
-        continue;
+  // Map literal costs ~1 MB of AOT init code, const string is stored as data
+  String toDartAll() {
+    final bytes = <int>[];
+    void writeVarint(int value) {
+      while (value >= 0x80) {
+        bytes.add((value & 0x7f) | 0x80);
+        value >>= 7;
       }
-      final index = (uc.codepoint >> 8) & 0xff;
-      res[index].write("${uc.toJSON()},");
-      if (!saved.contains(index)) {
-        saved.add(index);
+      bytes.add(value);
+    }
+
+    final entries = _cache.values
+        .where((uc) =>
+            uc.canonicalClass != 0 ||
+            uc.isCompatibility ||
+            uc.isExcluded ||
+            uc.decompose != null ||
+            uc.composeTrie.isNotEmpty)
+        .toList();
+    writeVarint(entries.length);
+    int previous = 0;
+    for (final uc in entries) {
+      uc.pack(writeVarint, previous);
+      previous = uc.codepoint;
+    }
+
+    final packed = StringBuffer();
+    for (final byte in bytes) {
+      if (byte >= 0x20 && byte < 0x7f && !r"\'$".contains(String.fromCharCode(byte))) {
+        packed.writeCharCode(byte);
       } else {
-        print("duplicate: ${_hex(uc.codepoint)}, $index");
+        packed.write("\\x${byte.toRadixString(16).padLeft(2, '0')}");
       }
     }
 
-    for (int i = 0; i < 256; i++) {
-      final sbout = res[i];
-      if (sbout.isEmpty) continue;
+    return """
+final Map<int, Map<int, List<Object?>>> unormdata = _unpack();
 
-      final content = sbout.toString().substring(0, sbout.length - 1);
-      sb.write("${i << 8}:{${content}},\n");
+Map<int, Map<int, List<Object?>>> _unpack() {
+  const String packed = '$packed';
+  int position = 0;
+  int readVarint() {
+    int value = 0, shift = 0, byte;
+    do {
+      byte = packed.codeUnitAt(position++);
+      value |= (byte & 0x7f) << shift;
+      shift += 7;
+    } while (byte >= 0x80);
+    return value;
+  }
+
+  final result = <int, Map<int, List<Object?>>>{};
+  int codepoint = 0;
+  for (int count = readVarint(); count > 0; count--) {
+    codepoint += readVarint();
+    final tag = readVarint();
+    final decompose =
+        tag & 1 != 0 ? List<int>.generate(readVarint(), (_) => readVarint()) : null;
+    final flag = tag & 2 != 0 ? readVarint() : null;
+    final compose = <int, int>{};
+    for (int pairs = readVarint(); pairs > 0; pairs--) {
+      final key = readVarint();
+      compose[key] = readVarint();
     }
-    final result = sb.toString();
-    return "${result.substring(0, result.length - 2)}\n};";
+    (result[codepoint & 0xff00] ??= {})[codepoint] = [decompose, flag, compose];
+  }
+  return result;
+}
+""";
   }
 }
 
@@ -134,7 +141,7 @@ Future<void> buildNormalizerData() async {
     readExclusionList(cache, compositionExclusions);
     buildDecompositionTables(cache, unicodeData);
     final file = File(outputFile);
-    await file.writeAsString(cache.toJSONAll(), encoding: utf8);
+    await file.writeAsString(cache.toDartAll(), encoding: utf8);
     // print("cache: ${cache.cache.keys.toList()}");
   } catch (e) {
     print("Can't load datafile. $e");
