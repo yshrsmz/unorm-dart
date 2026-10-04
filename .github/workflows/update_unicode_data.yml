@@ -60,7 +60,7 @@ jobs:
 
           # Add and commit changes
           git add .
-          git commit -m "Update Unicode data and normalization files"
+          git commit -m "feat: update Unicode data and normalization files"
 
           # Push branch
           git push origin $BRANCH_NAME
@@ -72,7 +72,7 @@ jobs:
           BRANCH_NAME: ${{ env.BRANCH_NAME }}
         run: |
           gh pr create \
-            --title "Update Unicode Data and Normalization Files" \
+            --title "feat: update Unicode data and normalization files" \
             --body "This PR updates the Unicode data files and regenerates normalization data. Updated data files in data/ directory and regenerated normalization data. This PR was automatically created by GitHub Actions." \
             --base master \
             --head "$BRANCH_NAME"
