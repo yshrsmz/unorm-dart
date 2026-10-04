@@ -44,6 +44,18 @@ jobs:
             echo "changes=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Determine commit title
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          # The first line of NormalizationTest.txt looks like "# NormalizationTest-17.0.0.txt"
+          UNICODE_VERSION=$(sed -n '1s/^# NormalizationTest-\(.*\)\.txt$/\1/p' data/NormalizationTest.txt)
+          if [[ -n "$UNICODE_VERSION" ]]; then
+            COMMIT_TITLE="feat: update Unicode data to $UNICODE_VERSION"
+          else
+            COMMIT_TITLE="feat: update Unicode data and normalization files"
+          fi
+          echo "COMMIT_TITLE=$COMMIT_TITLE" >> $GITHUB_ENV
+
       - name: Create branch and commit changes
         if: steps.git-check.outputs.changes == 'true'
         run: |
@@ -60,7 +72,7 @@ jobs:
 
           # Add and commit changes
           git add .
-          git commit -m "feat: update Unicode data and normalization files"
+          git commit -m "$COMMIT_TITLE"
 
           # Push branch
           git push origin $BRANCH_NAME
@@ -70,9 +82,10 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
           BRANCH_NAME: ${{ env.BRANCH_NAME }}
+          COMMIT_TITLE: ${{ env.COMMIT_TITLE }}
         run: |
           gh pr create \
-            --title "feat: update Unicode data and normalization files" \
+            --title "$COMMIT_TITLE" \
             --body "This PR updates the Unicode data files and regenerates normalization data. Updated data files in data/ directory and regenerated normalization data. This PR was automatically created by GitHub Actions." \
             --base master \
             --head "$BRANCH_NAME"
