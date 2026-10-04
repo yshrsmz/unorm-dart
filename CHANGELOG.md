@@ -4,6 +4,18 @@
 - Update dependency dart to v3.9.4 ([#40](https://github.com/yshrsmz/unorm-dart/pull/40))
 
 
+## [0.3.3](https://github.com/yshrsmz/unorm-dart/compare/unorm_dart-v0.3.2...unorm_dart-v0.3.3) (2026-10-04)
+
+
+### Features
+
+* update Unicode data to 18.0.0 ([#95](https://github.com/yshrsmz/unorm-dart/issues/95)) ([fc8ddea](https://github.com/yshrsmz/unorm-dart/commit/fc8ddea681072f1c926df4365debf6f62527c950))
+
+
+### Performance Improvements
+
+* pack unormdata into a const string, AOT size -952 KB ([#94](https://github.com/yshrsmz/unorm-dart/issues/94)) ([9ae4fb4](https://github.com/yshrsmz/unorm-dart/commit/9ae4fb4ff0be26f3a32757468acce145dfe9dfc2))
+
 ## 0.3.1+1
 
 - Update supported Unicode version to 16
