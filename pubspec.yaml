@@ -1,7 +1,7 @@
 name: unorm_dart
 description: Unicode 18.0 Normalization - NFC, NFD, NFKC, NFKD.
   This is a Dart port of [walling/unorm](https://github.com/walling/unorm).
-version: 0.3.2
+version: 0.3.3
 homepage: https://github.com/yshrsmz/unorm-dart
 
 environment:
