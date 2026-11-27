@@ -55,7 +55,7 @@ UChar _fromCpOnly(NextFunc? next, int cp, bool needFeature) {
 UChar _fromRuleBasedJamo(NextFunc? next, int cp, bool needFeature) {
   if (cp < _LBase ||
       (_LBase + _LCount <= cp && cp < _SBase) ||
-      (_SBase + _SCount < cp)) {
+      (_SBase + _SCount <= cp)) {
     return next!(cp, needFeature);
   }
   if (_LBase <= cp && cp < _LBase + _LCount) {
