@@ -4,6 +4,13 @@
 - Update dependency dart to v3.9.4 ([#40](https://github.com/yshrsmz/unorm-dart/pull/40))
 
 
+## [0.3.4](https://github.com/yshrsmz/unorm-dart/compare/v0.3.3...v0.3.4) (2026-11-27)
+
+
+### Bug Fixes
+
+* exclude U+D7A4 from the Hangul syllable range ([#102](https://github.com/yshrsmz/unorm-dart/issues/102)) ([f6f2141](https://github.com/yshrsmz/unorm-dart/commit/f6f21413284a1f20c407f07e6f5a1ef4226d8fec)), closes [#84](https://github.com/yshrsmz/unorm-dart/issues/84)
+
 ## [0.3.3](https://github.com/yshrsmz/unorm-dart/compare/unorm_dart-v0.3.2...unorm_dart-v0.3.3) (2026-10-04)
 
 
